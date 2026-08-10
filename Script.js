@@ -1,15 +1,15 @@
 /* ================================================================
-   AGRINHO — AGRO FORTE, FUTURO SUSTENTÁVEL
-   Script principal (interatividade do site)
-   Sumário:
-   1 utilidades · 2 header/menu · 3 scrollspy + reveal
-   4 hero (scramble, parallax, canteiro) · 5 contadores
-   6 calculadora verde · 7 quiz · 8 missão verde · 9 mural
+   AGRINHO — script principal (v2, com proteção contra falhas)
+   Se este arquivo não carregar, o site continua legível (o CSS
+   só esconde conteúdos quando a classe "js" é adicionada aqui).
 ================================================================ */
 (function(){
 "use strict";
 
-/* ---------- 1. utilidades ---------- */
+/* marca que o JS está ativo (só agora os efeitos de reveal passam a valer) */
+document.documentElement.classList.add("js");
+
+/* ---------- utilidades ---------- */
 const reduced = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
 const fmt = n => Math.round(n).toLocaleString("pt-BR");
 const $  = (s, c = document) => c.querySelector(s);
@@ -17,7 +17,7 @@ const $$ = (s, c = document) => [...c.querySelectorAll(s)];
 const escapeHTML = s => s.replace(/[&<>"']/g, m =>
   ({ "&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;","'":"&#39;" }[m]));
 
-/* ---------- 2. header, progresso, voltar ao topo ---------- */
+/* ---------- header, progresso, voltar ao topo ---------- */
 const header = $(".top"), bar = $("#progressBar"), toTop = $("#toTop");
 function onScroll(){
   const y = window.scrollY;
@@ -43,27 +43,44 @@ burger.addEventListener("click", () => setMenu(true));
 $("#navClose").addEventListener("click", () => setMenu(false));
 $$("#mobileNav a").forEach(a => a.addEventListener("click", () => setMenu(false)));
 
-/* ---------- 3. scrollspy + reveal ---------- */
-const spyLinks = $$("nav.main a[data-spy]");
-const spy = new IntersectionObserver(entries => {
-  entries.forEach(e => {
-    if (e.isIntersecting){
-      spyLinks.forEach(l =>
-        l.classList.toggle("active", l.getAttribute("href") === "#" + e.target.id));
-    }
-  });
-}, { rootMargin:"-40% 0px -55% 0px" });
-$$("main section[id]").forEach(s => spy.observe(s));
+/* ---------- scrollspy + reveal (com plano B) ---------- */
+const reveals = $$(".reveal");
+const hasIO = "IntersectionObserver" in window;
 
-const reveal = new IntersectionObserver(entries => {
-  entries.forEach(e => {
-    if (e.isIntersecting){ e.target.classList.add("in"); reveal.unobserve(e.target); }
-  });
-}, { threshold:.15 });
-$$(".reveal").forEach(el => reveal.observe(el));
+if (hasIO){
+  const spyLinks = $$("nav.main a[data-spy]");
+  const spy = new IntersectionObserver(entries => {
+    entries.forEach(e => {
+      if (e.isIntersecting){
+        spyLinks.forEach(l =>
+          l.classList.toggle("active", l.getAttribute("href") === "#" + e.target.id));
+      }
+    });
+  }, { rootMargin:"-40% 0px -55% 0px" });
+  $$("main section[id]").forEach(s => spy.observe(s));
 
-/* ---------- 4. hero: scramble, parallax, canteiro ---------- */
-// efeito de "decodificação" no texto de abertura
+  const reveal = new IntersectionObserver(entries => {
+    entries.forEach(e => {
+      if (e.isIntersecting){ e.target.classList.add("in"); reveal.unobserve(e.target); }
+    });
+  }, { threshold:0, rootMargin:"0px 0px -8% 0px" });
+  reveals.forEach(el => reveal.observe(el));
+} else {
+  /* navegador antigo: mostra tudo de uma vez */
+  reveals.forEach(el => el.classList.add("in"));
+}
+
+/* proteção extra: após carregar, garante visibilidade do que está na tela */
+addEventListener("load", () => {
+  setTimeout(() => {
+    reveals.forEach(el => {
+      const r = el.getBoundingClientRect();
+      if (r.top < innerHeight * 1.2 && r.bottom > 0) el.classList.add("in");
+    });
+  }, 500);
+});
+
+/* ---------- hero: scramble, parallax, canteiro ---------- */
 function scramble(el){
   const txt = el.dataset.text;
   if (reduced){ el.textContent = txt; return; }
@@ -81,12 +98,12 @@ function scramble(el){
     if (p < 1) requestAnimationFrame(tick); else el.textContent = txt;
   })(t0);
 }
-setTimeout(() => scramble($(".scramble")), 250);
+setTimeout(() => { const k = $(".scramble"); if (k) scramble(k); }, 250);
 
-// parallax suave das camadas de morros
 const hills = $$(".hill");
 if (!reduced && matchMedia("(pointer:fine)").matches){
-  $(".hero").addEventListener("mousemove", e => {
+  const hero = $(".hero");
+  hero.addEventListener("mousemove", e => {
     const cx = e.clientX / innerWidth - .5, cy = e.clientY / innerHeight - .5;
     hills.forEach(h => {
       const d = +h.dataset.depth;
@@ -95,7 +112,6 @@ if (!reduced && matchMedia("(pointer:fine)").matches){
   });
 }
 
-// canteiro interativo: clique para plantar sementes
 const canteiro = $("#canteiro"), seedCount = $("#seedCount");
 let seeds = +(localStorage.getItem("agrinho.sementes") || 0);
 seedCount.textContent = seeds;
@@ -123,25 +139,27 @@ canteiro.addEventListener("keydown", e => {
   }
 });
 
-/* ---------- 5. contadores animados (seção Impacto) ---------- */
+/* ---------- contadores animados ---------- */
 const counters = $$(".count");
-const cObs = new IntersectionObserver(entries => {
-  entries.forEach(e => {
-    if (!e.isIntersecting) return;
-    cObs.unobserve(e.target);
-    const target = +e.target.dataset.count;
-    if (reduced){ e.target.textContent = fmt(target); return; }
-    const t0 = performance.now(), dur = 1700;
-    (function step(now){
-      const p = Math.min(1, (now - t0) / dur), ease = 1 - Math.pow(1 - p, 3);
-      e.target.textContent = fmt(target * ease);
-      if (p < 1) requestAnimationFrame(step);
-    })(t0);
-  });
-}, { threshold:.6 });
-counters.forEach(c => cObs.observe(c));
+if (hasIO){
+  const cObs = new IntersectionObserver(entries => {
+    entries.forEach(e => {
+      if (!e.isIntersecting) return;
+      cObs.unobserve(e.target);
+      const target = +e.target.dataset.count;
+      if (reduced){ e.target.textContent = fmt(target); return; }
+      const t0 = performance.now(), dur = 1700;
+      (function step(now){
+        const p = Math.min(1, (now - t0) / dur), ease = 1 - Math.pow(1 - p, 3);
+        e.target.textContent = fmt(target * ease);
+        if (p < 1) requestAnimationFrame(step);
+      })(t0);
+    });
+  }, { threshold:.6 });
+  counters.forEach(c => cObs.observe(c));
+}
 
-/* ---------- 6. calculadora verde ---------- */
+/* ---------- calculadora verde ---------- */
 const rHa = $("#rHa"), rTr = $("#rTrees"), rCi = $("#rCis");
 const oCo2 = $("#oCo2"), oW = $("#oWater"), oO2 = $("#oO2"), oKm = $("#oKm");
 const bCo2 = $("#bCo2"), bW = $("#bWater"), bO2 = $("#bO2"), bKm = $("#bKm");
@@ -151,7 +169,7 @@ const MAX = {
   o2:    500*110,
   km:    (100*1400 + 500*20 + 30*8) * 6.7
 };
-const shown = { co2:0, water:0, o2:0, km:0 };
+const shown = { co2:7608, water:486000, o2:1320, km:50974 };
 function tween(el, key, to){
   const from = shown[key];
   if (reduced){ shown[key] = to; el.textContent = fmt(to); return; }
@@ -168,10 +186,10 @@ function calc(){
   $("#lHa").textContent    = ha + " ha";
   $("#lTrees").textContent = tr + " árvores";
   $("#lCis").textContent   = ci + (ci === 1 ? " unidade" : " unidades");
-  const co2   = ha*1400 + tr*20 + ci*8;       // kg CO₂ evitados/ano
-  const water = ha*120000 + ci*6000;          // litros preservados/ano
-  const o2    = tr*110;                       // kg de oxigênio/ano
-  const km    = co2 * 6.7;                    // km de carro compensados/ano
+  const co2   = ha*1400 + tr*20 + ci*8;
+  const water = ha*120000 + ci*6000;
+  const o2    = tr*110;
+  const km    = co2 * 6.7;
   tween(oCo2, "co2", co2);  tween(oW, "water", water);
   tween(oO2, "o2", o2);     tween(oKm, "km", km);
   bCo2.style.width = Math.min(100, co2   / MAX.co2   * 100) + "%";
@@ -182,7 +200,7 @@ function calc(){
 [rHa, rTr, rCi].forEach(i => i.addEventListener("input", calc));
 calc();
 
-/* ---------- 7. quiz ---------- */
+/* ---------- quiz ---------- */
 const QUESTIONS = [
   { q:"O plantio direto ajuda o solo porque…",
     a:["Revira a terra para deixá-la arejada",
@@ -263,7 +281,7 @@ function renderResult(){
 }
 renderQ();
 
-/* ---------- 8. missão verde (localStorage) ---------- */
+/* ---------- missão verde ---------- */
 const LEVELS = [
   [0, "🌰 Semente dormente"],
   [1, "🌱 Broto curioso"],
@@ -287,7 +305,7 @@ function updateMissao(){
 mChecks.forEach(c => c.addEventListener("change", updateMissao));
 updateMissao();
 
-/* ---------- 9. mural de compromissos (localStorage) ---------- */
+/* ---------- mural ---------- */
 const muralGrid = $("#muralGrid");
 const DEFAULTS = [
   { nome:"Turma 5º B", msg:"Vamos montar uma composteira na escola e adubar a horta." },
@@ -324,10 +342,5 @@ muralGrid.addEventListener("click", e => {
 });
 
 /* ---------- extras ---------- */
-// duplica a trilha do ticker para o loop infinito ficar perfeito
-const track = $("#tickerTrack");
-track.innerHTML += track.innerHTML;
-
-// ano atual no rodapé
 $("#year").textContent = new Date().getFullYear();
 })();
