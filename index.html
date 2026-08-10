@@ -1,0 +1,414 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Agrinho — Agro Forte, Futuro Sustentável</title>
+<meta name="description" content="Site educativo do Programa Agrinho: educação do campo, práticas sustentáveis, tecnologia e impacto social. Agro forte, futuro sustentável.">
+
+<!-- ============================================================
+  ESTRUTURA DO PROJETO (mapa do site)
+  Arquivos: index.html · style.css · script.js · README.md
+  01. Início .......... #inicio        → hero com campo animado + canteiro interativo
+  02. O Programa ...... #programa      → o que é o Agrinho + linha do tempo
+  03. Pilares ......... #pilares       → cartas empilhadas (sticky) dos 4 pilares
+  04. Soluções ........ #praticas      → práticas sustentáveis no campo
+  05. Calculadora ..... #calculadora   → calculadora verde interativa
+  06. Tecnologia ...... #tecnologia    → inovação no agro
+  07. Impacto ......... #impacto       → números + ODS
+  08. Quiz ............ #quiz          → quiz educativo
+  09. Missão .......... #missao        → checklist gamificado (salvo no navegador)
+  10. Mural ........... #mural         → mural de compromissos colaborativo
+============================================================ -->
+
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Fraunces:ital,opsz,wght@0,9..144,400;0,9..144,600;0,9..144,700;0,9..144,900;1,9..144,500;1,9..144,700&family=Instrument+Sans:ital,wght@0,400;0,500;0,600;1,400&family=Space+Mono:wght@400;700&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="style.css">
+</head>
+<body>
+
+<a class="skip" href="#programa">Ir para o conteúdo</a>
+<div class="grain" aria-hidden="true"></div>
+<div class="progress" aria-hidden="true"><span id="progressBar"></span></div>
+
+<!-- ================= CABEÇALHO ================= -->
+<header class="top" id="topo">
+  <div class="wrap topbar">
+    <a class="brand" href="#inicio" aria-label="Agrinho — início">
+      <svg viewBox="0 0 40 40" aria-hidden="true"><circle cx="20" cy="13" r="7" fill="#e8a83c" stroke="#22301c" stroke-width="2"/><path d="M20 20v14" stroke="#22301c" stroke-width="2.4"/><path d="M20 26c-6 0-9-3-10-7 5 0 8 2 10 7z" fill="#4b9b3e" stroke="#22301c" stroke-width="1.6"/><path d="M20 30c6 0 9-3 10-7-5 0-8 2-10 7z" fill="#74b443" stroke="#22301c" stroke-width="1.6"/></svg>
+      <span><b>Agrinho</b><small>safra 2026</small></span>
+    </a>
+    <nav class="main" aria-label="Navegação principal">
+      <a href="#inicio" data-spy>Início</a>
+      <a href="#programa" data-spy>O Programa</a>
+      <a href="#pilares" data-spy>Pilares</a>
+      <a href="#praticas" data-spy>Soluções</a>
+      <a href="#calculadora" data-spy>Calculadora</a>
+      <a href="#tecnologia" data-spy>Tecnologia</a>
+      <a href="#impacto" data-spy>Impacto</a>
+      <a href="#quiz" data-spy>Quiz</a>
+      <a href="#missao" data-spy>Missão</a>
+      <a href="#mural" data-spy>Mural</a>
+    </nav>
+    <button class="burger" id="navToggle" aria-label="Abrir menu" aria-expanded="false">☰ menu</button>
+  </div>
+</header>
+
+<!-- menu móvel -->
+<div class="mobile-nav" id="mobileNav" aria-hidden="true">
+  <button class="close-nav" id="navClose" aria-label="Fechar menu">✕ fechar</button>
+  <a href="#inicio"><span class="mono">01</span>Início</a>
+  <a href="#programa"><span class="mono">02</span>O Programa</a>
+  <a href="#pilares"><span class="mono">03</span>Pilares</a>
+  <a href="#praticas"><span class="mono">04</span>Soluções</a>
+  <a href="#calculadora"><span class="mono">05</span>Calculadora</a>
+  <a href="#tecnologia"><span class="mono">06</span>Tecnologia</a>
+  <a href="#impacto"><span class="mono">07</span>Impacto</a>
+  <a href="#quiz"><span class="mono">08</span>Quiz</a>
+  <a href="#missao"><span class="mono">09</span>Missão</a>
+  <a href="#mural"><span class="mono">10</span>Mural</a>
+</div>
+
+<main>
+
+<!-- ================= 01. HERO ================= -->
+<section class="hero" id="inicio">
+  <svg class="hero-sun" viewBox="0 0 200 200" aria-hidden="true">
+    <g class="rays" stroke="#c07b16" stroke-width="4" stroke-linecap="round">
+      <line x1="100" y1="8" x2="100" y2="30"/><line x1="100" y1="170" x2="100" y2="192"/>
+      <line x1="8" y1="100" x2="30" y2="100"/><line x1="170" y1="100" x2="192" y2="100"/>
+      <line x1="35" y1="35" x2="50" y2="50"/><line x1="150" y1="150" x2="165" y2="165"/>
+      <line x1="165" y1="35" x2="150" y2="50"/><line x1="50" y1="150" x2="35" y2="165"/>
+    </g>
+    <circle cx="100" cy="100" r="52" fill="#f0b429" stroke="#c07b16" stroke-width="4"/>
+  </svg>
+
+  <div class="hill far" data-depth="14" aria-hidden="true">
+    <svg viewBox="0 0 1440 220" preserveAspectRatio="none"><path d="M0 150 Q240 60 480 120 T960 100 T1440 130 V220 H0 Z" fill="#cfa845"/></svg>
+  </div>
+  <div class="hill mid" data-depth="26" aria-hidden="true">
+    <svg viewBox="0 0 1440 220" preserveAspectRatio="none"><path d="M0 160 Q300 80 620 140 T1440 120 V220 H0 Z" fill="#6c9a3f"/></svg>
+  </div>
+  <div class="hill near" data-depth="42" aria-hidden="true">
+    <svg viewBox="0 0 1440 260" preserveAspectRatio="none">
+      <path d="M0 170 Q360 90 720 150 T1440 140 V260 H0 Z" fill="#17301b"/>
+      <g stroke="#e8a83c" stroke-width="3" fill="none" stroke-linecap="round">
+        <g class="sway" transform="translate(120,60)"><path d="M0 110 V40"/><path d="M0 40 q-14-8-16-26 14 4 16 26 q2-22 16-26 -2 18-16 26"/></g>
+        <g class="sway" transform="translate(320,90)"><path d="M0 80 V20"/><path d="M0 20 q-13-7-15-24 13 4 15 24 q2-20 15-24 -2 17-15 24"/></g>
+        <g class="sway" transform="translate(540,70)"><path d="M0 100 V30"/><path d="M0 30 q-14-8-16-26 14 4 16 26 q2-22 16-26 -2 18-16 26"/></g>
+        <g class="sway" transform="translate(820,95)"><path d="M0 75 V15"/><path d="M0 15 q-13-7-15-24 13 4 15 24 q2-20 15-24 -2 17-15 24"/></g>
+        <g class="sway" transform="translate(1080,65)"><path d="M0 105 V35"/><path d="M0 35 q-14-8-16-26 14 4 16 26 q2-22 16-26 -2 18-16 26"/></g>
+        <g class="sway" transform="translate(1300,85)"><path d="M0 85 V25"/><path d="M0 25 q-13-7-15-24 13 4 15 24 q2-20 15-24 -2 17-15 24"/></g>
+      </g>
+    </svg>
+  </div>
+
+  <div class="hero-inner">
+    <div class="wrap hero-grid">
+      <div class="in" id="heroText">
+        <p class="kicker scramble" data-text="Programa Agrinho ✦ Educação do campo ✦ Paraná, Brasil">Programa Agrinho ✦ Educação do campo ✦ Paraná, Brasil</p>
+        <h1>
+          <span class="mask"><span>Agro forte,</span></span>
+          <span class="mask"><span><em>futuro</em></span></span>
+          <span class="mask"><span>Sustentável.</span></span>
+        </h1>
+        <p class="lead">Educação que brota na escola e floresce no campo: um site-vitrine sobre como práticas sustentáveis, tecnologia e cooperação fortalecem o agro — e o futuro de todo mundo.</p>
+        <div class="hero-ctas">
+          <a class="btn" href="#programa">🌾 Explorar o programa</a>
+          <a class="btn ghost" href="#quiz">Fazer o quiz</a>
+        </div>
+        <div class="hero-meta">
+          <span class="chip">31 anos de história</span>
+          <span class="chip">+1 milhão de estudantes</span>
+          <span class="chip">ODS 2 · 4 · 13 · 15</span>
+        </div>
+      </div>
+      <div class="hero-side">
+        <span class="stamp">✦ safra 2026 ✦<br>agrinho</span>
+      </div>
+    </div>
+  </div>
+
+  <p class="scroll-cue" aria-hidden="true">role para descobrir <span>↓</span></p>
+
+  <div class="canteiro" id="canteiro" role="group" aria-label="Canteiro interativo: clique para plantar uma semente" tabindex="0">
+    <p class="canteiro-label">🌰 Clique no canteiro para plantar — sementes germinadas: <b id="seedCount">0</b></p>
+  </div>
+</section>
+
+<!-- ================= TICKER ================= -->
+<div class="ticker" aria-hidden="true">
+  <div class="ticker-track" id="tickerTrack">
+    <span>Solo vivo <i>✺</i></span><span>Agricultura familiar <i>✺</i></span><span>Educação do campo <i>✺</i></span><span>Água limpa <i>✺</i></span><span>Biodiversidade <i>✺</i></span><span>Inovação <i>✺</i></span><span>Cooperação <i>✺</i></span><span>Agro forte <i>✺</i></span><span>Futuro sustentável <i>✺</i></span>
+  </div>
+</div>
+
+<!-- ================= 02. O PROGRAMA ================= -->
+<section class="about furrows" id="programa">
+  <div class="wrap about-grid">
+    <div class="photo-stack reveal">
+      <figure class="leaf-frame kb ph1"><img src="https://picsum.photos/seed/horta-escola-rural/800/620" alt="Estudantes em horta escolar no meio rural" loading="lazy"></figure>
+      <figure class="leaf-frame kb ph2"><img src="https://picsum.photos/seed/campo-agricultura-familiar/700/560" alt="Agricultura familiar no campo" loading="lazy"></figure>
+      <span class="badge-rot">desde 1995 no Paraná</span>
+    </div>
+    <div class="reveal" data-d="1">
+      <p class="kicker">Seção 02 — O Programa</p>
+      <h2>O que é o <em>Agrinho</em>?</h2>
+      <p>O Agrinho é um dos maiores programas de educação do campo do Brasil. Criado pelo Sistema FAEP/SENAR-PR, ele leva para dentro das escolas públicas do Paraná — e inspira todo o país — reflexões sobre agricultura, meio ambiente, saúde, ética e cidadania.</p>
+      <p>A cada safra, milhares de professores e estudantes transformam o tema do ano em projetos reais: hortas escolares, composteiras, feiras de ciências, campanhas de economia de água e muita pesquisa sobre como produzir alimentos cuidando do planeta. O Concurso Agrinho premia os melhores relatos e desenhos dessa jornada.</p>
+      <p><strong>Nesta edição, o tema é “Agro forte, futuro sustentável”:</strong> a ideia de que um campo produtivo, tecnológico e justo é a base de um futuro possível para todos.</p>
+      <ul class="timeline">
+        <li><b>1995</b><span>Nasce o Programa Agrinho, levando o universo do campo para a sala de aula.</span></li>
+        <li><b>anos 2000</b><span>O Concurso Agrinho cresce e passa a premiar projetos de escolas de todo o Paraná.</span></li>
+        <li><b>hoje</b><span>Mais de 1 milhão de estudantes e milhares de professores envolvidos a cada edição.</span></li>
+        <li><b>2026</b><span>Tema da safra: “Agro forte, futuro sustentável” — e este site faz parte dessa história.</span></li>
+      </ul>
+    </div>
+  </div>
+</section>
+
+<!-- ================= 03. PILARES ================= -->
+<section class="pilares" id="pilares">
+  <div class="wrap pilares-grid">
+    <div class="pilares-sticky reveal">
+      <p class="kicker">Seção 03 — Pilares</p>
+      <h2>Os quatro pilares de um <em>agro forte</em></h2>
+      <p>Um campo forte não nasce por acaso: ele é cultivado com educação, solo saudável, água preservada e gente unida. Role e veja cada pilar se empilhar. 🌱</p>
+      <a class="btn dark" style="margin-top:1.6rem" href="#praticas">Ver as soluções →</a>
+    </div>
+    <div class="stack">
+      <article class="p-card" style="--i:1">
+        <span class="num">01</span>
+        <figure class="leaf-frame"><img src="https://picsum.photos/seed/agro-educacao-criancas/640/460" alt="Educação no campo" loading="lazy"></figure>
+        <div>
+          <h3>Educação que enraíza</h3>
+          <p>Tudo começa na escola. Professores formados e alunos curiosos transformam conhecimento em atitude: plantar, pesquisar, questionar e cuidar. A sala de aula vira laboratório vivo.</p>
+          <div class="tags"><span>Formação docente</span><span>Concurso Agrinho</span><span>Projetos escolares</span></div>
+        </div>
+      </article>
+      <article class="p-card" style="--i:2">
+        <span class="num">02</span>
+        <figure class="leaf-frame"><img src="https://picsum.photos/seed/solo-vivo-plantio/640/460" alt="Solo vivo" loading="lazy"></figure>
+        <div>
+          <h3>Solo vivo, produção forte</h3>
+          <p>O solo é a pele da Terra. Com plantio direto, rotação de culturas e matéria orgânica, ele guarda água, alimenta microrganismos e produz mais — safra após safra — sem se esgotar.</p>
+          <div class="tags"><span>Plantio direto</span><span>Rotação</span><span>Análise de solo</span></div>
+        </div>
+      </article>
+      <article class="p-card" style="--i:3">
+        <span class="num">03</span>
+        <figure class="leaf-frame"><img src="https://picsum.photos/seed/agua-rio-nascente/640/460" alt="Água e clima" loading="lazy"></figure>
+        <div>
+          <h3>Água e clima em equilíbrio</h3>
+          <p>Nascentes protegidas, cisternas, irrigação de precisão e matas ciliares: cada gota conta. Um agro forte se adapta às mudanças do clima e protege as fontes de água de toda a comunidade.</p>
+          <div class="tags"><span>Cisternas</span><span>Mata ciliar</span><span>Adaptação climática</span></div>
+        </div>
+      </article>
+      <article class="p-card" style="--i:4">
+        <span class="num">04</span>
+        <figure class="leaf-frame"><img src="https://picsum.photos/seed/cooperativa-comunidade-rural/640/460" alt="Comunidade e cooperação" loading="lazy"></figure>
+        <div>
+          <h3>Comunidade e cooperação</h3>
+          <p>Agricultura familiar, cooperativas, feiras locais e sucessão no campo: quando as pessoas se organizam, a renda circula, o jovem fica e o território inteiro floresce junto.</p>
+          <div class="tags"><span>Cooperativismo</span><span>Feiras locais</span><span>Sucessão rural</span></div>
+        </div>
+      </article>
+    </div>
+  </div>
+</section>
+
+<!-- ================= 04. SOLUÇÕES / PRÁTICAS ================= -->
+<section class="praticas furrows" id="praticas">
+  <div class="wrap">
+    <div class="sec-head reveal">
+      <p class="kicker">Seção 04 — Soluções</p>
+      <h2>Práticas que já estão <em>transformando o campo</em></h2>
+      <p>Sustentabilidade não é promessa para o futuro: é técnica aplicada hoje. Conheça seis soluções reais que unem produção e preservação.</p>
+    </div>
+    <div class="praticas-grid">
+      <article class="pr-card c5 reveal"><span class="sprout-ico">🌾</span><span class="idx">PRÁTICA 01</span><h3>Plantio Direto</h3><p>Plantar sobre a palhada da colheita anterior, sem revolver a terra. O solo fica protegido da chuva e do sol, guarda mais umidade e a vida microbiana se multiplica.</p><span class="impact">até 90% menos erosão*</span></article>
+      <article class="pr-card c4 reveal" data-d="1"><span class="sprout-ico">🌳</span><span class="idx">PRÁTICA 02</span><h3>ILPF</h3><p>Integração Lavoura-Pecuária-Floresta: três sistemas na mesma área, gerando renda o ano inteiro, sombra para os animais e carbono capturado.</p><span class="impact">3 colheitas na mesma terra*</span></article>
+      <article class="pr-card c3 reveal" data-d="2"><span class="sprout-ico">🍃</span><span class="idx">PRÁTICA 03</span><h3>Agrofloresta</h3><p>Árvores, hortaliças e frutas crescendo juntas, imitando a natureza: mais biodiversidade e alimento variado.</p><span class="impact">biodiversidade viva*</span></article>
+      <article class="pr-card c4 reveal"><span class="sprout-ico">🦠</span><span class="idx">PRÁTICA 04</span><h3>Bioinsumos</h3><p>Microrganismos e inimigos naturais que nutrem plantas e controlam pragas, reduzindo a dependência de defensivos químicos.</p><span class="impact">menos químicos no solo*</span></article>
+      <article class="pr-card c4 reveal" data-d="1"><span class="sprout-ico">💧</span><span class="idx">PRÁTICA 05</span><h3>Água guardada</h3><p>Cisternas captam a chuva e a irrigação por gotejamento entrega cada gota direto na raiz, sem desperdício.</p><span class="impact">milhares de litros/ano*</span></article>
+      <article class="pr-card c4 reveal" data-d="2"><span class="sprout-ico">☀️</span><span class="idx">PRÁTICA 06</span><h3>Energia no campo</h3><p>Painéis solares e biodigestores transformam sol e resíduos em energia limpa, barateando custos e reduzindo emissões.</p><span class="impact">energia limpa e local*</span></article>
+    </div>
+    <p class="praticas-note">*valores aproximados e ilustrativos, para fins educativos.</p>
+  </div>
+</section>
+
+<!-- ================= 05. CALCULADORA ================= -->
+<section class="calc" id="calculadora">
+  <div class="wrap calc-grid">
+    <div class="reveal">
+      <p class="kicker">Seção 05 — Interativo</p>
+      <h2>Calculadora <em>Verde</em></h2>
+      <p>Brinque com os controles e veja o impacto coletivo de práticas sustentáveis. Se uma escola, um sítio ou um município inteiro adotarem essas ideias, quanto o planeta ganha? Arraste e descubra.</p>
+      <p style="margin-top:1.2rem">💡 <strong>Dica:</strong> use estes números para convencer sua turma a montar uma horta ou uma composteira!</p>
+    </div>
+    <div class="calc-panel reveal" data-d="1">
+      <h3>🧮 Monte seu cenário sustentável</h3>
+      <div class="slider-row">
+        <label for="rHa">Área com plantio direto <b id="lHa">4 ha</b></label>
+        <input type="range" id="rHa" min="0" max="100" value="4">
+      </div>
+      <div class="slider-row">
+        <label for="rTrees">Árvores plantadas <b id="lTrees">12 árvores</b></label>
+        <input type="range" id="rTrees" min="0" max="500" value="12">
+      </div>
+      <div class="slider-row">
+        <label for="rCis">Cisternas de água da chuva <b id="lCis">1 unidade</b></label>
+        <input type="range" id="rCis" min="0" max="30" value="1">
+      </div>
+      <div class="calc-out">
+        <div class="out-box"><b id="oCo2">0</b><span>kg de CO₂ evitados / ano</span><div class="bar"><i id="bCo2"></i></div></div>
+        <div class="out-box"><b id="oWater">0</b><span>litros de água preservados / ano</span><div class="bar"><i id="bWater"></i></div></div>
+        <div class="out-box"><b id="oO2">0</b><span>kg de oxigênio produzidos / ano</span><div class="bar"><i id="bO2"></i></div></div>
+        <div class="out-box"><b id="oKm">0</b><span>km de carro compensados / ano</span><div class="bar"><i id="bKm"></i></div></div>
+      </div>
+      <p class="calc-note">estimativas ilustrativas para fins educativos ✦ safra 2026</p>
+    </div>
+  </div>
+</section>
+
+<!-- ================= 06. TECNOLOGIA ================= -->
+<section class="tec" id="tecnologia">
+  <div class="wrap">
+    <div class="sec-head reveal">
+      <p class="kicker">Seção 06 — Tecnologia</p>
+      <h2>O campo também é <em>high-tech</em></h2>
+      <p class="lead">Drones, satélites e inteligência artificial já trabalham lado a lado com agricultores e agricultoras — produzindo mais com menos, e cuidando de cada palmo de terra.</p>
+    </div>
+    <p class="tec-term reveal">&gt; conectando o campo ao futuro_</p>
+    <div class="tec-grid">
+      <article class="tec-card reveal"><figure class="leaf-frame kb"><img src="https://picsum.photos/seed/drone-pulverizacao-lavoura/640/420" alt="Drone sobre lavoura" loading="lazy"></figure><div class="body"><h3>Drones no talhão</h3><p>Mapeiam falhas na lavoura e aplicam insumos apenas onde é preciso, reduzindo desperdício.</p></div></article>
+      <article class="tec-card reveal" data-d="1"><figure class="leaf-frame kb"><img src="https://picsum.photos/seed/sensor-solo-iot/640/420" alt="Sensores de solo" loading="lazy"></figure><div class="body"><h3>Sensores IoT</h3><p>Medem umidade e nutrientes do solo em tempo real e avisam o celular do produtor.</p></div></article>
+      <article class="tec-card reveal" data-d="2"><figure class="leaf-frame kb"><img src="https://picsum.photos/seed/satelite-mapa-fazenda/640/420" alt="Imagem de satélite de fazenda" loading="lazy"></figure><div class="body"><h3>Satélites e mapas</h3><p>Imagens de satélite acompanham o crescimento das plantas e alertam sobre pragas e secas.</p></div></article>
+      <article class="tec-card reveal" data-d="3"><figure class="leaf-frame kb"><img src="https://picsum.photos/seed/aplicativo-gestao-fazenda/640/420" alt="Aplicativo de gestão rural" loading="lazy"></figure><div class="body"><h3>Gestão no bolso</h3><p>Aplicativos organizam custos, safra e vendas, fortalecendo também a agricultura familiar.</p></div></article>
+    </div>
+    <div class="tec-chips reveal">
+      <span>GPS agrícola</span><span>Inteligência artificial</span><span>Sementes melhoradas</span><span>Energia solar</span><span>Máquinas elétricas</span><span>Rastreabilidade</span><span>Wi-Fi rural</span><span>Big data do clima</span>
+    </div>
+  </div>
+</section>
+
+<!-- ================= 07. IMPACTO ================= -->
+<section class="impacto furrows" id="impacto">
+  <div class="wrap">
+    <div class="sec-head reveal">
+      <p class="kicker">Seção 07 — Impacto</p>
+      <h2>Uma colheita de <em>resultados</em></h2>
+      <p>O Agrinho mostra que a maior safra do campo é o conhecimento. Veja o alcance do programa e os Objetivos de Desenvolvimento Sustentável (ONU) com os quais ele conversa.</p>
+    </div>
+    <div class="stats">
+      <div class="stat reveal"><b><span class="count" data-count="1000000">0</span><sup>+</sup></b><span>estudantes por edição</span></div>
+      <div class="stat reveal" data-d="1"><b><span class="count" data-count="20000">0</span><sup>+</sup></b><span>professores envolvidos</span></div>
+      <div class="stat reveal" data-d="2"><b><span class="count" data-count="350">0</span><sup>+</sup></b><span>municípios participantes</span></div>
+      <div class="stat reveal" data-d="3"><b><span class="count" data-count="31">0</span></b><span>anos semeando ideias</span></div>
+    </div>
+    <div class="reveal">
+      <p class="mono" style="color:var(--gold-deep)">Conectado à Agenda 2030 da ONU →</p>
+      <div class="ods-row">
+        <span class="ods" style="background:#dda63a">ODS 2 · Fome zero</span>
+        <span class="ods" style="background:#c5192d">ODS 4 · Educação de qualidade</span>
+        <span class="ods" style="background:#26bde2">ODS 6 · Água potável</span>
+        <span class="ods" style="background:#bf8b2e">ODS 12 · Consumo responsável</span>
+        <span class="ods" style="background:#3f7e44">ODS 13 · Ação climática</span>
+        <span class="ods" style="background:#56c02b">ODS 15 · Vida terrestre</span>
+      </div>
+      <p class="fine">*números aproximados do programa, apresentados com finalidade educativa.</p>
+    </div>
+  </div>
+</section>
+
+<!-- ================= 08. QUIZ ================= -->
+<section class="quiz" id="quiz">
+  <div class="wrap quiz-grid">
+    <div class="reveal">
+      <p class="kicker">Seção 08 — Educação</p>
+      <h2>Quiz <em>Agrinho</em></h2>
+      <p style="color:var(--ink-soft)">Será que você já é um guardião do agro sustentável? Teste seus conhecimentos em 5 perguntas rápidas — cada resposta vem com explicação. Boa colheita! 🌽</p>
+    </div>
+    <div class="quiz-box reveal" data-d="1" id="quizBox" aria-live="polite"><!-- renderizado via script.js --></div>
+  </div>
+</section>
+
+<!-- ================= 09. MISSÃO ================= -->
+<section class="missao furrows" id="missao">
+  <div class="wrap missao-grid">
+    <div class="reveal">
+      <p class="kicker">Seção 09 — Missão Verde</p>
+      <h2>Sua missão, <em>guardião(ã)</em></h2>
+      <p style="color:var(--ink-soft);margin-bottom:1.8rem">Marque as ações sustentáveis que você já fez ou vai fazer esta semana. Seu progresso fica salvo neste navegador — e sobe de nível como uma planta crescendo!</p>
+      <div class="missao-list" id="missaoList">
+        <label class="m-item"><input type="checkbox" data-m="0"><span>Separei o lixo reciclável em casa ou na escola</span></label>
+        <label class="m-item"><input type="checkbox" data-m="1"><span>Plantei uma muda em vaso, canteiro ou quintal</span></label>
+        <label class="m-item"><input type="checkbox" data-m="2"><span>Compostei restos de frutas e legumes</span></label>
+        <label class="m-item"><input type="checkbox" data-m="3"><span>Reaproveitei água (chuva ou lavagem) para regar plantas</span></label>
+        <label class="m-item"><input type="checkbox" data-m="4"><span>Evitei desperdiçar comida no prato</span></label>
+        <label class="m-item"><input type="checkbox" data-m="5"><span>Visitei uma feira ou produtor local com minha família</span></label>
+        <label class="m-item"><input type="checkbox" data-m="6"><span>Economizei energia e água durante o dia</span></label>
+        <label class="m-item"><input type="checkbox" data-m="7"><span>Ensinei algo sobre sustentabilidade para alguém</span></label>
+      </div>
+    </div>
+    <div class="level-card reveal" data-d="1">
+      <h3>Nível de guardião(ã)</h3>
+      <p class="lvl" id="missaoLevel">🌰 Semente dormente</p>
+      <div class="level-bar"><i id="missaoBar"></i></div>
+      <small id="missaoCount">0 de 8 missões concluídas</small>
+      <small>Seu progresso fica salvo no navegador 💾</small>
+    </div>
+  </div>
+</section>
+
+<!-- ================= 10. MURAL ================= -->
+<section class="mural" id="mural">
+  <div class="wrap">
+    <div class="sec-head reveal">
+      <p class="kicker">Seção 10 — Mural</p>
+      <h2>Mural de <em>compromissos</em> com o futuro</h2>
+      <p>Escreva um compromisso seu com o agro sustentável e plante-o no mural. Pequenas atitudes, somadas, viram floresta. 🌳</p>
+    </div>
+    <form class="mural-form reveal" id="muralForm">
+      <input type="text" id="mName" placeholder="Seu nome ou o da sua turma" maxlength="40" required>
+      <input type="text" id="mMsg" placeholder="Meu compromisso é…" maxlength="140" required>
+      <button class="btn" type="submit">🌱 Plantar compromisso</button>
+    </form>
+    <div class="mural-grid" id="muralGrid"><!-- cards via script.js --></div>
+  </div>
+</section>
+
+</main>
+
+<!-- ================= RODAPÉ ================= -->
+<footer>
+  <div class="wrap">
+    <p class="foot-title reveal">Agro forte,<br><em>futuro sustentável.</em></p>
+    <div class="foot-grid">
+      <div>
+        <h4>Sobre o projeto</h4>
+        <p>Site educativo criado no contexto do Programa Agrinho (Sistema FAEP/SENAR-PR), safra 2026, com o tema “Agro forte, futuro sustentável”. Conteúdo produzido com finalidade pedagógica — dados numéricos aproximados e ilustrativos.</p>
+      </div>
+      <div>
+        <h4>Navegação</h4>
+        <a href="#inicio">Início</a><a href="#programa">O Programa</a><a href="#pilares">Pilares</a><a href="#praticas">Soluções</a><a href="#calculadora">Calculadora Verde</a><a href="#tecnologia">Tecnologia</a>
+      </div>
+      <div>
+        <h4>Participe</h4>
+        <a href="#impacto">Impacto & ODS</a><a href="#quiz">Quiz Agrinho</a><a href="#missao">Missão Verde</a><a href="#mural">Mural de compromissos</a><a href="#topo">Voltar ao topo ↑</a>
+      </div>
+    </div>
+    <div class="foot-base">
+      <span>© <span id="year">2026</span> Projeto Agrinho · Educação do campo</span>
+      <span>HTML · CSS · JavaScript — feito para o GitHub Pages</span>
+      <span>Tipografia: Fraunces · Instrument Sans · Space Mono</span>
+    </div>
+  </div>
+</footer>
+
+<button id="toTop" aria-label="Voltar ao topo">🌱</button>
+
+<script src="script.js"></script>
+</body>
+</html>
